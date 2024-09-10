@@ -1,12 +1,18 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using SchoolNotes.API.Models;
 using SchoolNotes.API.Repositories;
 using SchoolNotes.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.Configure<DBPostgreSQLSettings>(builder.Configuration.GetSection("DBPostgreSQLSettings"));
+
 builder.Services.AddDbContext<DBPostgreSQL>((IServiceProvider services, DbContextOptionsBuilder options) =>
 {
-    string connectionString = "Host=localhost:5432;Username=postgres;Password=admin;Database=SchoolNotes";
+    DBPostgreSQLSettings dbSettings = services.GetRequiredService<IOptions<DBPostgreSQLSettings>>().Value;
+    string connectionString = $"Host={dbSettings.Host};Username={dbSettings.Username};Password={dbSettings.Password};Database={dbSettings.Database}";
     options.UseNpgsql(connectionString);
 });
 
