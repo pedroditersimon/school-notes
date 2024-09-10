@@ -16,7 +16,6 @@ builder.Services.AddDbContext<DBPostgreSQL>((IServiceProvider services, DbContex
     options.UseNpgsql(connectionString);
 });
 
-builder.Services.AddScoped<DbContext, DBPostgreSQL>();
 builder.Services.AddScoped<StudentRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

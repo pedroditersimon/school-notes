@@ -6,5 +6,5 @@ public class Student : BaseModel<Guid>
     public string? LastName { get; set; }    // Perez
     public string? FullName { get; set; }    // Juan Paco Perez
 
-    public IQueryable<Note> Notes { get; set; }
+    public virtual ICollection<Note> Notes { get; set; }
 }

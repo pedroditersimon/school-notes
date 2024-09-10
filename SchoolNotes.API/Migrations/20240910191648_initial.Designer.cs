@@ -12,7 +12,7 @@ using SchoolNotes.API.Services;
 namespace SchoolNotes.API.Migrations
 {
     [DbContext(typeof(DBPostgreSQL))]
-    [Migration("20240910043904_initial")]
+    [Migration("20240910191648_initial")]
     partial class initial
     {
         /// <inheritdoc />

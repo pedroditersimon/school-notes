@@ -4,6 +4,7 @@ namespace SchoolNotes.API.Models;
 
 public class BaseModel<Tid>
 {
+    [Key]
     public Tid ID { get; set; }
 
     // soft delete

@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SchoolNotes.API.Repositories;
+﻿using SchoolNotes.API.Repositories;
 
 namespace SchoolNotes.API.Services;
 
-public class UnitOfWork(DbContext dbContext, StudentRepository studentRepository) : IUnitOfWork
+public class UnitOfWork(DBPostgreSQL dbContext, StudentRepository studentRepository) : IUnitOfWork
 {
-    public StudentRepository StudentRepository { get; set; } = studentRepository;
+    public StudentRepository StudentRepository { get; } = studentRepository;
 
     public void Dispose()
         => dbContext.Dispose();

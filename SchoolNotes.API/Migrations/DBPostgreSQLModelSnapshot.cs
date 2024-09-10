@@ -46,7 +46,7 @@ namespace SchoolNotes.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Course", (string)null);
+                    b.ToTable("Course");
                 });
 
             modelBuilder.Entity("SchoolNotes.API.Models.Note", b =>
@@ -86,7 +86,7 @@ namespace SchoolNotes.API.Migrations
 
                     b.HasIndex("SubjectID");
 
-                    b.ToTable("Note", (string)null);
+                    b.ToTable("Note");
                 });
 
             modelBuilder.Entity("SchoolNotes.API.Models.Student", b =>
@@ -119,7 +119,7 @@ namespace SchoolNotes.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Student", (string)null);
+                    b.ToTable("Student");
                 });
 
             modelBuilder.Entity("SchoolNotes.API.Models.Note", b =>
