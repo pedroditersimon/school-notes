@@ -3,6 +3,7 @@
 public interface IRepository<T, Tid>
 {
     public Task<T?> GetByID(Tid id);
+    public IQueryable<T> GetAll(int limit = 50);
 
     public Task<T?> Update(T newEntity);
     public Task<T?> Create(T newEntity);

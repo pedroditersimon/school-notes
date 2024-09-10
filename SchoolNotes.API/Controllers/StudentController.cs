@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SchoolNotes.API.Models;
 using SchoolNotes.API.Services;
 
@@ -17,6 +18,13 @@ public class StudentController(IUnitOfWork unitOfWork) : ControllerBase
             return NotFound();
 
         return student;
+    }
+
+    [HttpGet(nameof(GetAll) + "/{limit}")]
+    public async Task<ActionResult<List<Student>>> GetAll(int limit = 50)
+    {
+        IQueryable<Student> students = unitOfWork.StudentRepository.GetAll(limit);
+        return await students.ToListAsync();
     }
 
     [HttpPost]

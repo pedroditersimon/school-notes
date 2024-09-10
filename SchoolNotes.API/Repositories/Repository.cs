@@ -11,13 +11,13 @@ public class Repository<T, Tid>(DbContext dbContext) : IRepository<T, Tid>
     protected DbSet<T> Entities => dbContext.Set<T>();
 
 
-    public async Task<T?> Create(T newEntity)
-        => Entities.Add(newEntity).Entity;
-
-
     public async Task<T?> GetByID(Tid id)
         => await Entities.Where(e => e.ID.Equals(id)).FirstOrDefaultAsync();
+    public IQueryable<T> GetAll(int limit = 50)
+        => Entities.Take(limit);
 
+    public async Task<T?> Create(T newEntity)
+    => Entities.Add(newEntity).Entity;
 
     public async Task<bool> HardDelete(Tid id)
     {
