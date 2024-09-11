@@ -46,13 +46,13 @@ namespace SchoolNotes.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Note",
+                name: "Score",
                 columns: table => new
                 {
                     ID = table.Column<Guid>(type: "uuid", nullable: false),
                     StudentID = table.Column<Guid>(type: "uuid", nullable: false),
                     SubjectID = table.Column<Guid>(type: "uuid", nullable: false),
-                    Score = table.Column<int>(type: "integer", nullable: false),
+                    Value = table.Column<int>(type: "integer", nullable: false),
                     IsApproved = table.Column<bool>(type: "boolean", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -61,15 +61,15 @@ namespace SchoolNotes.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Note", x => x.ID);
+                    table.PrimaryKey("PK_Score", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Note_Course_SubjectID",
+                        name: "FK_Score_Course_SubjectID",
                         column: x => x.SubjectID,
                         principalTable: "Course",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Note_Student_StudentID",
+                        name: "FK_Score_Student_StudentID",
                         column: x => x.StudentID,
                         principalTable: "Student",
                         principalColumn: "ID",
@@ -77,13 +77,13 @@ namespace SchoolNotes.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Note_StudentID",
-                table: "Note",
+                name: "IX_Score_StudentID",
+                table: "Score",
                 column: "StudentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Note_SubjectID",
-                table: "Note",
+                name: "IX_Score_SubjectID",
+                table: "Score",
                 column: "SubjectID");
         }
 
@@ -91,7 +91,7 @@ namespace SchoolNotes.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Note");
+                name: "Score");
 
             migrationBuilder.DropTable(
                 name: "Course");

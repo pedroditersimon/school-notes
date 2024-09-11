@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolNotes.API.Models;
 
-namespace SchoolNotes.API.Services;
+namespace SchoolNotes.API.Database;
 
 public class DBPostgreSQL : DbContext
 {
@@ -16,7 +16,7 @@ public class DBPostgreSQL : DbContext
 
         // dont include Soft deleted entities in any queries
         modelBuilder.Entity<Student>().HasQueryFilter(t => !t.IsDeleted);
-        modelBuilder.Entity<Note>().HasQueryFilter(t => !t.IsDeleted);
+        modelBuilder.Entity<Score>().HasQueryFilter(t => !t.IsDeleted);
         modelBuilder.Entity<Course>().HasQueryFilter(t => !t.IsDeleted);
     }
 }

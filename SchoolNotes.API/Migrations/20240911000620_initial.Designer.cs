@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using SchoolNotes.API.Services;
+using SchoolNotes.API.Database;
 
 #nullable disable
 
 namespace SchoolNotes.API.Migrations
 {
     [DbContext(typeof(DBPostgreSQL))]
-    [Migration("20240910191648_initial")]
+    [Migration("20240911000620_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -52,7 +52,7 @@ namespace SchoolNotes.API.Migrations
                     b.ToTable("Course");
                 });
 
-            modelBuilder.Entity("SchoolNotes.API.Models.Note", b =>
+            modelBuilder.Entity("SchoolNotes.API.Models.Score", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -70,9 +70,6 @@ namespace SchoolNotes.API.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Score")
-                        .HasColumnType("integer");
-
                     b.Property<Guid>("StudentID")
                         .HasColumnType("uuid");
 
@@ -83,13 +80,16 @@ namespace SchoolNotes.API.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("Value")
+                        .HasColumnType("integer");
+
                     b.HasKey("ID");
 
                     b.HasIndex("StudentID");
 
                     b.HasIndex("SubjectID");
 
-                    b.ToTable("Note");
+                    b.ToTable("Score");
                 });
 
             modelBuilder.Entity("SchoolNotes.API.Models.Student", b =>
@@ -125,10 +125,10 @@ namespace SchoolNotes.API.Migrations
                     b.ToTable("Student");
                 });
 
-            modelBuilder.Entity("SchoolNotes.API.Models.Note", b =>
+            modelBuilder.Entity("SchoolNotes.API.Models.Score", b =>
                 {
                     b.HasOne("SchoolNotes.API.Models.Student", "Student")
-                        .WithMany("Notes")
+                        .WithMany("Scores")
                         .HasForeignKey("StudentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -146,7 +146,7 @@ namespace SchoolNotes.API.Migrations
 
             modelBuilder.Entity("SchoolNotes.API.Models.Student", b =>
                 {
-                    b.Navigation("Notes");
+                    b.Navigation("Scores");
                 });
 #pragma warning restore 612, 618
         }

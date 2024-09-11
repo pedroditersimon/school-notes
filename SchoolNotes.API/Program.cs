@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using SchoolNotes.API.Models;
+using SchoolNotes.API.Database;
 using SchoolNotes.API.Repositories;
 using SchoolNotes.API.Services;
 

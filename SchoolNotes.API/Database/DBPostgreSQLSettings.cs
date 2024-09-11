@@ -1,4 +1,4 @@
-﻿namespace SchoolNotes.API.Models;
+﻿namespace SchoolNotes.API.Database;
 
 
 public class DBPostgreSQLSettings

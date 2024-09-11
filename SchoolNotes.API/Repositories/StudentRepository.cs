@@ -1,5 +1,5 @@
-﻿using SchoolNotes.API.Models;
-using SchoolNotes.API.Services;
+﻿using SchoolNotes.API.Database;
+using SchoolNotes.API.Models;
 
 namespace SchoolNotes.API.Repositories;
 

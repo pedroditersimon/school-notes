@@ -1,5 +1,5 @@
-﻿using SchoolNotes.API.Repositories;
-
+﻿using SchoolNotes.API.Database;
+using SchoolNotes.API.Repositories;
 namespace SchoolNotes.API.Services;
 
 public class UnitOfWork(DBPostgreSQL dbContext, StudentRepository studentRepository) : IUnitOfWork
