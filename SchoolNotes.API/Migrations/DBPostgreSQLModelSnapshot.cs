@@ -49,10 +49,63 @@ namespace SchoolNotes.API.Migrations
                     b.ToTable("Course");
                 });
 
+            modelBuilder.Entity("SchoolNotes.API.Models.CourseSession", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CourseID")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .IsConcurrencyToken()
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CourseID");
+
+                    b.ToTable("CourseSession");
+                });
+
+            modelBuilder.Entity("SchoolNotes.API.Models.CourseSessionStudents", b =>
+                {
+                    b.Property<Guid>("CourseSessionID")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("StudentID")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("CourseSessionID", "StudentID");
+
+                    b.HasIndex("StudentID");
+
+                    b.ToTable("CourseSessionStudents");
+                });
+
             modelBuilder.Entity("SchoolNotes.API.Models.Score", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CourseSessionID")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedDate")
@@ -70,9 +123,6 @@ namespace SchoolNotes.API.Migrations
                     b.Property<Guid>("StudentID")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("SubjectID")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("UpdatedDate")
                         .IsConcurrencyToken()
                         .HasColumnType("timestamp with time zone");
@@ -82,9 +132,7 @@ namespace SchoolNotes.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("StudentID");
-
-                    b.HasIndex("SubjectID");
+                    b.HasIndex("CourseSessionID", "StudentID");
 
                     b.ToTable("Score");
                 });
@@ -122,28 +170,65 @@ namespace SchoolNotes.API.Migrations
                     b.ToTable("Student");
                 });
 
-            modelBuilder.Entity("SchoolNotes.API.Models.Score", b =>
+            modelBuilder.Entity("SchoolNotes.API.Models.CourseSession", b =>
                 {
+                    b.HasOne("SchoolNotes.API.Models.Course", "Course")
+                        .WithMany("CourseSessions")
+                        .HasForeignKey("CourseID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("SchoolNotes.API.Models.CourseSessionStudents", b =>
+                {
+                    b.HasOne("SchoolNotes.API.Models.CourseSession", "CourseSession")
+                        .WithMany("CourseSessionStudents")
+                        .HasForeignKey("CourseSessionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SchoolNotes.API.Models.Student", "Student")
-                        .WithMany("Scores")
+                        .WithMany("CourseSessionStudents")
                         .HasForeignKey("StudentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SchoolNotes.API.Models.Course", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectID")
+                    b.Navigation("CourseSession");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("SchoolNotes.API.Models.Score", b =>
+                {
+                    b.HasOne("SchoolNotes.API.Models.CourseSessionStudents", "CourseSessionStudent")
+                        .WithMany("Scores")
+                        .HasForeignKey("CourseSessionID", "StudentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Student");
+                    b.Navigation("CourseSessionStudent");
+                });
 
-                    b.Navigation("Subject");
+            modelBuilder.Entity("SchoolNotes.API.Models.Course", b =>
+                {
+                    b.Navigation("CourseSessions");
+                });
+
+            modelBuilder.Entity("SchoolNotes.API.Models.CourseSession", b =>
+                {
+                    b.Navigation("CourseSessionStudents");
+                });
+
+            modelBuilder.Entity("SchoolNotes.API.Models.CourseSessionStudents", b =>
+                {
+                    b.Navigation("Scores");
                 });
 
             modelBuilder.Entity("SchoolNotes.API.Models.Student", b =>
                 {
-                    b.Navigation("Scores");
+                    b.Navigation("CourseSessionStudents");
                 });
 #pragma warning restore 612, 618
         }

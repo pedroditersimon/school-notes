@@ -6,5 +6,6 @@ public class Student : BaseModel<Guid>
     public string? LastName { get; set; }    // Perez
     public string? FullName { get; set; }    // Juan Paco Perez
 
-    public virtual ICollection<Score> Scores { get; set; }
+    // relations
+    public virtual ICollection<CourseSessionStudents> CourseSessionStudents { get; set; }
 }

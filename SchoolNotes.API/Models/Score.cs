@@ -4,10 +4,13 @@ namespace SchoolNotes.API.Models;
 
 public class Score : BaseModel<Guid>
 {
-    public Student Student { get; set; }
-    public Course Subject { get; set; }
-
     [Range(1, 10)]
     public int Value { get; set; }
     public bool IsApproved { get; set; }
+
+
+    // relations
+    public Guid CourseSessionID { get; set; }
+    public Guid StudentID { get; set; }
+    public CourseSessionStudents CourseSessionStudent { get; set; }
 }
