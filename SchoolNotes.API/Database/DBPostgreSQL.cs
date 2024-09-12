@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SchoolNotes.API.Database.Seeds;
 using SchoolNotes.API.Models;
 
 namespace SchoolNotes.API.Database;
@@ -20,22 +21,11 @@ public class DBPostgreSQL : DbContext
         modelBuilder.Entity<Student>().HasQueryFilter(t => !t.IsDeleted);
         modelBuilder.Entity<Score>().HasQueryFilter(t => !t.IsDeleted);
 
-        modelBuilder.Entity<CourseSessionStudents>()
-            .HasKey(cst => new { cst.CourseSessionID, cst.StudentID });
-
-        modelBuilder.Entity<CourseSessionStudents>()
-            .HasOne(cst => cst.CourseSession)
-            .WithMany(cs => cs.CourseSessionStudents)
-            .HasForeignKey(cst => cst.CourseSessionID);
-
-        modelBuilder.Entity<CourseSessionStudents>()
-            .HasOne(cst => cst.Student)
-            .WithMany(s => s.CourseSessionStudents)
-            .HasForeignKey(cst => cst.StudentID);
-
-        modelBuilder.Entity<Score>()
-            .HasOne(sc => sc.CourseSessionStudent)
-            .WithMany(cst => cst.Scores)
-            .HasForeignKey(sc => new { sc.CourseSessionID, sc.StudentID });
+        // Seeds
+        modelBuilder.ApplyConfiguration(new StudentSeed());
+        modelBuilder.ApplyConfiguration(new CourseSeed());
+        modelBuilder.ApplyConfiguration(new CourseSessionSeed());
+        modelBuilder.ApplyConfiguration(new CourseSessionStudentSeed());
+        modelBuilder.ApplyConfiguration(new ScoreSeed());
     }
 }

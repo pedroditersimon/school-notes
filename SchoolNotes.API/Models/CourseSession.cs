@@ -8,6 +8,6 @@ public class CourseSession : BaseModel<Guid>
 
 
     // relations
-    public Course Course { get; set; }
-    public virtual ICollection<CourseSessionStudents> CourseSessionStudents { get; set; }
+    public Guid CourseID { get; set; }
+    public Course? Course { get; set; }
 }

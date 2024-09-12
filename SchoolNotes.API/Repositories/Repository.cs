@@ -17,7 +17,7 @@ public class Repository<T, Tid>(DbContext dbContext) : IRepository<T, Tid>
         => Entities.Take(limit);
 
     public async Task<T?> Create(T newEntity)
-    => Entities.Add(newEntity).Entity;
+        => Entities.Add(newEntity).Entity;
 
     public async Task<bool> HardDelete(Tid id)
     {

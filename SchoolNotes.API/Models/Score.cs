@@ -10,7 +10,6 @@ public class Score : BaseModel<Guid>
 
 
     // relations
-    public Guid CourseSessionID { get; set; }
-    public Guid StudentID { get; set; }
-    public CourseSessionStudents CourseSessionStudent { get; set; }
+    public Guid CourseSessionStudentID { get; set; }
+    public CourseSessionStudent? CourseSessionStudent { get; set; }
 }

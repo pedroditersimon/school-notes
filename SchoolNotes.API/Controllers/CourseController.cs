@@ -6,8 +6,8 @@ namespace SchoolNotes.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class StudentController(StudentService studentService)
-    : GenericController<Student, Guid>(studentService)
+public class CourseController(CourseService courseService)
+    : GenericController<Course, Guid>(courseService)
 {
 
 
