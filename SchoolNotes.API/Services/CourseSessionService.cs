@@ -12,7 +12,7 @@ public class CourseSessionService(IUnitOfWork unitOfWork)
     {
         IQueryable<CourseSessionStudent> courseSessionStudents = _unitOfWork.CourseSessionStudentRepository.GetByStudentID(studentID);
 
-        return courseSessionStudents.Include(cst => cst.CourseSession).Select(cst => cst.CourseSession);
+        return courseSessionStudents.Include(cst => cst.CourseSession).Include(cst => cst.CourseSession.Course).Select(cst => cst.CourseSession);
     }
 
 

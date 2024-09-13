@@ -10,22 +10,17 @@ public class CourseSessionStudentController(CourseSessionStudentService courseSe
     : GenericController<CourseSessionStudent, Guid>(courseSessionStudentService)
 {
 
-
-
-    [HttpGet(nameof(GetByStudentID) + "/{id}")]
-    public async Task<ActionResult<List<CourseSessionStudent>>> GetByStudentID(Guid id)
+    [HttpGet(nameof(GetByStudentID) + "/{studentID}")]
+    public async Task<ActionResult<List<CourseSessionStudent>>> GetByStudentID(Guid studentID)
     {
-        return await courseSessionStudentService.GetByStudentID(id);
+        return await courseSessionStudentService.GetByStudentID(studentID);
     }
 
 
-    [HttpGet(nameof(GetByCourseSessionID) + "/{id}")]
-    public async Task<ActionResult<List<CourseSessionStudent>>> GetByCourseSessionID(Guid id)
+    [HttpGet(nameof(GetByCourseSessionID) + "/{courseSessionID}")]
+    public async Task<ActionResult<List<CourseSessionStudent>>> GetByCourseSessionID(Guid courseSessionID)
     {
-        return await courseSessionStudentService.GetByCourseSessionID(id);
+        return await courseSessionStudentService.GetByCourseSessionID(courseSessionID);
     }
-
-
 
 }
-

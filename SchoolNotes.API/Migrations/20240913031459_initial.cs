@@ -106,7 +106,8 @@ namespace SchoolNotes.API.Migrations
                     ID = table.Column<Guid>(type: "uuid", nullable: false),
                     Value = table.Column<int>(type: "integer", nullable: false),
                     IsApproved = table.Column<bool>(type: "boolean", nullable: false),
-                    CourseSessionStudentID = table.Column<Guid>(type: "uuid", nullable: false),
+                    StudentID = table.Column<Guid>(type: "uuid", nullable: false),
+                    CourseSessionID = table.Column<Guid>(type: "uuid", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DeletedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -116,9 +117,15 @@ namespace SchoolNotes.API.Migrations
                 {
                     table.PrimaryKey("PK_Score", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Score_CourseSessionStudent_CourseSessionStudentID",
-                        column: x => x.CourseSessionStudentID,
-                        principalTable: "CourseSessionStudent",
+                        name: "FK_Score_CourseSession_CourseSessionID",
+                        column: x => x.CourseSessionID,
+                        principalTable: "CourseSession",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Score_Student_StudentID",
+                        column: x => x.StudentID,
+                        principalTable: "Student",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -148,9 +155,9 @@ namespace SchoolNotes.API.Migrations
                 columns: new[] { "ID", "CourseID", "CreatedDate", "DeletedDate", "EndTime", "IsDeleted", "StartTime", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("44444444-4444-4444-4444-444444444444"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 12, 22, 42, 9, 262, DateTimeKind.Utc).AddTicks(702), false, new DateTime(2024, 9, 12, 20, 42, 9, 262, DateTimeKind.Utc).AddTicks(695), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { new Guid("55555555-5555-5555-5555-555555555555"), new Guid("22222222-2222-2222-2222-222222222222"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 13, 22, 42, 9, 262, DateTimeKind.Utc).AddTicks(706), false, new DateTime(2024, 9, 13, 20, 42, 9, 262, DateTimeKind.Utc).AddTicks(705), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { new Guid("66666666-6666-6666-6666-666666666666"), new Guid("33333333-3333-3333-3333-333333333333"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 14, 22, 42, 9, 262, DateTimeKind.Utc).AddTicks(709), false, new DateTime(2024, 9, 14, 20, 42, 9, 262, DateTimeKind.Utc).AddTicks(708), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { new Guid("44444444-4444-4444-4444-444444444444"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 14, 5, 14, 55, 809, DateTimeKind.Utc).AddTicks(6242), false, new DateTime(2024, 9, 14, 3, 14, 55, 809, DateTimeKind.Utc).AddTicks(6234), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("55555555-5555-5555-5555-555555555555"), new Guid("22222222-2222-2222-2222-222222222222"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 15, 5, 14, 55, 809, DateTimeKind.Utc).AddTicks(6245), false, new DateTime(2024, 9, 15, 3, 14, 55, 809, DateTimeKind.Utc).AddTicks(6244), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("66666666-6666-6666-6666-666666666666"), new Guid("33333333-3333-3333-3333-333333333333"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 16, 5, 14, 55, 809, DateTimeKind.Utc).AddTicks(6247), false, new DateTime(2024, 9, 16, 3, 14, 55, 809, DateTimeKind.Utc).AddTicks(6247), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
@@ -165,12 +172,12 @@ namespace SchoolNotes.API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Score",
-                columns: new[] { "ID", "CourseSessionStudentID", "CreatedDate", "DeletedDate", "IsApproved", "IsDeleted", "UpdatedDate", "Value" },
+                columns: new[] { "ID", "CourseSessionID", "CreatedDate", "DeletedDate", "IsApproved", "IsDeleted", "StudentID", "UpdatedDate", "Value" },
                 values: new object[,]
                 {
-                    { new Guid("aaaaaaa0-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new Guid("77777777-7777-7777-7777-777777777777"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 10 },
-                    { new Guid("bbbbbbb0-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new Guid("88888888-8888-8888-8888-888888888888"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 8 },
-                    { new Guid("ccccccc0-cccc-cccc-cccc-cccccccccccc"), new Guid("99999999-9999-9999-9999-999999999999"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5 }
+                    { new Guid("aaaaaaa0-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new Guid("44444444-4444-4444-4444-444444444444"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, false, new Guid("00000000-0000-0000-0000-000000000001"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 10 },
+                    { new Guid("bbbbbbb0-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new Guid("55555555-5555-5555-5555-555555555555"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, false, new Guid("00000000-0000-0000-0000-000000000002"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 8 },
+                    { new Guid("ccccccc0-cccc-cccc-cccc-cccccccccccc"), new Guid("66666666-6666-6666-6666-666666666666"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, false, new Guid("00000000-0000-0000-0000-000000000003"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -189,19 +196,24 @@ namespace SchoolNotes.API.Migrations
                 column: "StudentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Score_CourseSessionStudentID",
+                name: "IX_Score_CourseSessionID",
                 table: "Score",
-                column: "CourseSessionStudentID");
+                column: "CourseSessionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Score_StudentID",
+                table: "Score",
+                column: "StudentID");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Score");
+                name: "CourseSessionStudent");
 
             migrationBuilder.DropTable(
-                name: "CourseSessionStudent");
+                name: "Score");
 
             migrationBuilder.DropTable(
                 name: "CourseSession");

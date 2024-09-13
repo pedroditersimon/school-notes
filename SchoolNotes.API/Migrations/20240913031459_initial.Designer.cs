@@ -12,7 +12,7 @@ using SchoolNotes.API.Database;
 namespace SchoolNotes.API.Migrations
 {
     [DbContext(typeof(DBPostgreSQL))]
-    [Migration("20240911204210_initial")]
+    [Migration("20240913031459_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -122,9 +122,9 @@ namespace SchoolNotes.API.Migrations
                             CourseID = new Guid("11111111-1111-1111-1111-111111111111"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new DateTime(2024, 9, 12, 22, 42, 9, 262, DateTimeKind.Utc).AddTicks(702),
+                            EndTime = new DateTime(2024, 9, 14, 5, 14, 55, 809, DateTimeKind.Utc).AddTicks(6242),
                             IsDeleted = false,
-                            StartTime = new DateTime(2024, 9, 12, 20, 42, 9, 262, DateTimeKind.Utc).AddTicks(695),
+                            StartTime = new DateTime(2024, 9, 14, 3, 14, 55, 809, DateTimeKind.Utc).AddTicks(6234),
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -133,9 +133,9 @@ namespace SchoolNotes.API.Migrations
                             CourseID = new Guid("22222222-2222-2222-2222-222222222222"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new DateTime(2024, 9, 13, 22, 42, 9, 262, DateTimeKind.Utc).AddTicks(706),
+                            EndTime = new DateTime(2024, 9, 15, 5, 14, 55, 809, DateTimeKind.Utc).AddTicks(6245),
                             IsDeleted = false,
-                            StartTime = new DateTime(2024, 9, 13, 20, 42, 9, 262, DateTimeKind.Utc).AddTicks(705),
+                            StartTime = new DateTime(2024, 9, 15, 3, 14, 55, 809, DateTimeKind.Utc).AddTicks(6244),
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -144,9 +144,9 @@ namespace SchoolNotes.API.Migrations
                             CourseID = new Guid("33333333-3333-3333-3333-333333333333"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new DateTime(2024, 9, 14, 22, 42, 9, 262, DateTimeKind.Utc).AddTicks(709),
+                            EndTime = new DateTime(2024, 9, 16, 5, 14, 55, 809, DateTimeKind.Utc).AddTicks(6247),
                             IsDeleted = false,
-                            StartTime = new DateTime(2024, 9, 14, 20, 42, 9, 262, DateTimeKind.Utc).AddTicks(708),
+                            StartTime = new DateTime(2024, 9, 16, 3, 14, 55, 809, DateTimeKind.Utc).AddTicks(6247),
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -223,7 +223,7 @@ namespace SchoolNotes.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CourseSessionStudentID")
+                    b.Property<Guid>("CourseSessionID")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedDate")
@@ -238,6 +238,9 @@ namespace SchoolNotes.API.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<Guid>("StudentID")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("UpdatedDate")
                         .IsConcurrencyToken()
                         .HasColumnType("timestamp with time zone");
@@ -247,7 +250,9 @@ namespace SchoolNotes.API.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CourseSessionStudentID");
+                    b.HasIndex("CourseSessionID");
+
+                    b.HasIndex("StudentID");
 
                     b.ToTable("Score");
 
@@ -255,33 +260,36 @@ namespace SchoolNotes.API.Migrations
                         new
                         {
                             ID = new Guid("aaaaaaa0-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-                            CourseSessionStudentID = new Guid("77777777-7777-7777-7777-777777777777"),
+                            CourseSessionID = new Guid("44444444-4444-4444-4444-444444444444"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             IsDeleted = false,
+                            StudentID = new Guid("00000000-0000-0000-0000-000000000001"),
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Value = 10
                         },
                         new
                         {
                             ID = new Guid("bbbbbbb0-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
-                            CourseSessionStudentID = new Guid("88888888-8888-8888-8888-888888888888"),
+                            CourseSessionID = new Guid("55555555-5555-5555-5555-555555555555"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             IsDeleted = false,
+                            StudentID = new Guid("00000000-0000-0000-0000-000000000002"),
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Value = 8
                         },
                         new
                         {
                             ID = new Guid("ccccccc0-cccc-cccc-cccc-cccccccccccc"),
-                            CourseSessionStudentID = new Guid("99999999-9999-9999-9999-999999999999"),
+                            CourseSessionID = new Guid("66666666-6666-6666-6666-666666666666"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = false,
                             IsDeleted = false,
+                            StudentID = new Guid("00000000-0000-0000-0000-000000000003"),
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Value = 5
                         });
@@ -381,13 +389,21 @@ namespace SchoolNotes.API.Migrations
 
             modelBuilder.Entity("SchoolNotes.API.Models.Score", b =>
                 {
-                    b.HasOne("SchoolNotes.API.Models.CourseSessionStudent", "CourseSessionStudent")
+                    b.HasOne("SchoolNotes.API.Models.CourseSession", "CourseSession")
                         .WithMany()
-                        .HasForeignKey("CourseSessionStudentID")
+                        .HasForeignKey("CourseSessionID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CourseSessionStudent");
+                    b.HasOne("SchoolNotes.API.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CourseSession");
+
+                    b.Navigation("Student");
                 });
 #pragma warning restore 612, 618
         }
