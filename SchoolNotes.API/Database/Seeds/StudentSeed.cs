@@ -11,21 +11,15 @@ public class StudentSeed : IEntityTypeConfiguration<Student>
         builder.HasData(
             new Student
             {
-                ID = Guid.Parse("00000000-0000-0000-0000-000000000001"),
-                FirstName = "Maria",
-                LastName = "Gonzalez"
+                ID = Guid.Parse("00000000-0000-0000-0000-000000000001") // Maria
             },
             new Student
             {
-                ID = Guid.Parse("00000000-0000-0000-0000-000000000002"),
-                FirstName = "Juan",
-                LastName = "Perez"
+                ID = Guid.Parse("00000000-0000-0000-0000-000000000002") // Juan
             },
             new Student
             {
-                ID = Guid.Parse("00000000-0000-0000-0000-000000000003"),
-                FirstName = "Carlos",
-                LastName = "Rodriguez"
+                ID = Guid.Parse("00000000-0000-0000-0000-000000000003") // Carlos
             }
         );
 

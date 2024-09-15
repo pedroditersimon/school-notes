@@ -22,6 +22,68 @@ namespace SchoolNotes.API.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("SchoolNotes.API.Models.Contact", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .IsConcurrencyToken()
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Contact");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = new Guid("00000000-0000-0000-0000-000000000001"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Maria",
+                            IsDeleted = false,
+                            LastName = "Gonzalez",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            ID = new Guid("00000000-0000-0000-0000-000000000002"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Juan",
+                            IsDeleted = false,
+                            LastName = "Perez",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            ID = new Guid("00000000-0000-0000-0000-000000000003"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Carlos",
+                            IsDeleted = false,
+                            LastName = "Rodriguez",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
             modelBuilder.Entity("SchoolNotes.API.Models.Course", b =>
                 {
                     b.Property<Guid>("ID")
@@ -102,6 +164,9 @@ namespace SchoolNotes.API.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid>("TeacherID")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("UpdatedDate")
                         .IsConcurrencyToken()
                         .HasColumnType("timestamp with time zone");
@@ -109,6 +174,8 @@ namespace SchoolNotes.API.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("CourseID");
+
+                    b.HasIndex("TeacherID");
 
                     b.ToTable("CourseSession");
 
@@ -119,9 +186,10 @@ namespace SchoolNotes.API.Migrations
                             CourseID = new Guid("11111111-1111-1111-1111-111111111111"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new DateTime(2024, 9, 14, 5, 14, 55, 809, DateTimeKind.Utc).AddTicks(6242),
+                            EndTime = new DateTime(2024, 9, 16, 23, 53, 16, 548, DateTimeKind.Utc).AddTicks(4915),
                             IsDeleted = false,
-                            StartTime = new DateTime(2024, 9, 14, 3, 14, 55, 809, DateTimeKind.Utc).AddTicks(6234),
+                            StartTime = new DateTime(2024, 9, 16, 21, 53, 16, 548, DateTimeKind.Utc).AddTicks(4907),
+                            TeacherID = new Guid("00000000-0000-0000-0000-000000000001"),
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -130,9 +198,10 @@ namespace SchoolNotes.API.Migrations
                             CourseID = new Guid("22222222-2222-2222-2222-222222222222"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new DateTime(2024, 9, 15, 5, 14, 55, 809, DateTimeKind.Utc).AddTicks(6245),
+                            EndTime = new DateTime(2024, 9, 17, 23, 53, 16, 548, DateTimeKind.Utc).AddTicks(4924),
                             IsDeleted = false,
-                            StartTime = new DateTime(2024, 9, 15, 3, 14, 55, 809, DateTimeKind.Utc).AddTicks(6244),
+                            StartTime = new DateTime(2024, 9, 17, 21, 53, 16, 548, DateTimeKind.Utc).AddTicks(4923),
+                            TeacherID = new Guid("00000000-0000-0000-0000-000000000001"),
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -141,9 +210,10 @@ namespace SchoolNotes.API.Migrations
                             CourseID = new Guid("33333333-3333-3333-3333-333333333333"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new DateTime(2024, 9, 16, 5, 14, 55, 809, DateTimeKind.Utc).AddTicks(6247),
+                            EndTime = new DateTime(2024, 9, 18, 23, 53, 16, 548, DateTimeKind.Utc).AddTicks(4927),
                             IsDeleted = false,
-                            StartTime = new DateTime(2024, 9, 16, 3, 14, 55, 809, DateTimeKind.Utc).AddTicks(6247),
+                            StartTime = new DateTime(2024, 9, 18, 21, 53, 16, 548, DateTimeKind.Utc).AddTicks(4926),
+                            TeacherID = new Guid("00000000-0000-0000-0000-000000000001"),
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -295,7 +365,6 @@ namespace SchoolNotes.API.Migrations
             modelBuilder.Entity("SchoolNotes.API.Models.Student", b =>
                 {
                     b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedDate")
@@ -304,14 +373,8 @@ namespace SchoolNotes.API.Migrations
                     b.Property<DateTime>("DeletedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("text");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedDate")
                         .IsConcurrencyToken()
@@ -327,9 +390,7 @@ namespace SchoolNotes.API.Migrations
                             ID = new Guid("00000000-0000-0000-0000-000000000001"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Maria",
                             IsDeleted = false,
-                            LastName = "Gonzalez",
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -337,9 +398,7 @@ namespace SchoolNotes.API.Migrations
                             ID = new Guid("00000000-0000-0000-0000-000000000002"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Juan",
                             IsDeleted = false,
-                            LastName = "Perez",
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -347,9 +406,40 @@ namespace SchoolNotes.API.Migrations
                             ID = new Guid("00000000-0000-0000-0000-000000000003"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Carlos",
                             IsDeleted = false,
-                            LastName = "Rodriguez",
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
+            modelBuilder.Entity("SchoolNotes.API.Models.Teacher", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .IsConcurrencyToken()
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Teacher");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = new Guid("00000000-0000-0000-0000-000000000001"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -362,7 +452,15 @@ namespace SchoolNotes.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SchoolNotes.API.Models.Teacher", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Course");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("SchoolNotes.API.Models.CourseSessionStudent", b =>
@@ -401,6 +499,28 @@ namespace SchoolNotes.API.Migrations
                     b.Navigation("CourseSession");
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("SchoolNotes.API.Models.Student", b =>
+                {
+                    b.HasOne("SchoolNotes.API.Models.Contact", "Contact")
+                        .WithMany()
+                        .HasForeignKey("ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contact");
+                });
+
+            modelBuilder.Entity("SchoolNotes.API.Models.Teacher", b =>
+                {
+                    b.HasOne("SchoolNotes.API.Models.Contact", "Contact")
+                        .WithMany()
+                        .HasForeignKey("ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contact");
                 });
 #pragma warning restore 612, 618
         }

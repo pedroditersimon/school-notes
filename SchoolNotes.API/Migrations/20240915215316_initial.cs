@@ -14,6 +14,23 @@ namespace SchoolNotes.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Contact",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    FirstName = table.Column<string>(type: "text", nullable: true),
+                    LastName = table.Column<string>(type: "text", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DeletedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contact", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Course",
                 columns: table => new
                 {
@@ -34,8 +51,6 @@ namespace SchoolNotes.API.Migrations
                 columns: table => new
                 {
                     ID = table.Column<Guid>(type: "uuid", nullable: false),
-                    FirstName = table.Column<string>(type: "text", nullable: true),
-                    LastName = table.Column<string>(type: "text", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DeletedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -44,6 +59,33 @@ namespace SchoolNotes.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Student", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Student_Contact_ID",
+                        column: x => x.ID,
+                        principalTable: "Contact",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Teacher",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DeletedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teacher", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Teacher_Contact_ID",
+                        column: x => x.ID,
+                        principalTable: "Contact",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,6 +96,7 @@ namespace SchoolNotes.API.Migrations
                     StartTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     EndTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CourseID = table.Column<Guid>(type: "uuid", nullable: false),
+                    TeacherID = table.Column<Guid>(type: "uuid", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DeletedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -66,6 +109,12 @@ namespace SchoolNotes.API.Migrations
                         name: "FK_CourseSession_Course_CourseID",
                         column: x => x.CourseID,
                         principalTable: "Course",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CourseSession_Teacher_TeacherID",
+                        column: x => x.TeacherID,
+                        principalTable: "Teacher",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -131,6 +180,16 @@ namespace SchoolNotes.API.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Contact",
+                columns: new[] { "ID", "CreatedDate", "DeletedDate", "FirstName", "IsDeleted", "LastName", "UpdatedDate" },
+                values: new object[,]
+                {
+                    { new Guid("00000000-0000-0000-0000-000000000001"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Maria", false, "Gonzalez", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("00000000-0000-0000-0000-000000000002"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Juan", false, "Perez", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("00000000-0000-0000-0000-000000000003"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Carlos", false, "Rodriguez", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Course",
                 columns: new[] { "ID", "CreatedDate", "DeletedDate", "IsDeleted", "Name", "UpdatedDate" },
                 values: new object[,]
@@ -142,22 +201,27 @@ namespace SchoolNotes.API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Student",
-                columns: new[] { "ID", "CreatedDate", "DeletedDate", "FirstName", "IsDeleted", "LastName", "UpdatedDate" },
+                columns: new[] { "ID", "CreatedDate", "DeletedDate", "IsDeleted", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("00000000-0000-0000-0000-000000000001"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Maria", false, "Gonzalez", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { new Guid("00000000-0000-0000-0000-000000000002"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Juan", false, "Perez", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { new Guid("00000000-0000-0000-0000-000000000003"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Carlos", false, "Rodriguez", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { new Guid("00000000-0000-0000-0000-000000000001"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("00000000-0000-0000-0000-000000000002"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("00000000-0000-0000-0000-000000000003"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
+                table: "Teacher",
+                columns: new[] { "ID", "CreatedDate", "DeletedDate", "IsDeleted", "UpdatedDate" },
+                values: new object[] { new Guid("00000000-0000-0000-0000-000000000001"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+
+            migrationBuilder.InsertData(
                 table: "CourseSession",
-                columns: new[] { "ID", "CourseID", "CreatedDate", "DeletedDate", "EndTime", "IsDeleted", "StartTime", "UpdatedDate" },
+                columns: new[] { "ID", "CourseID", "CreatedDate", "DeletedDate", "EndTime", "IsDeleted", "StartTime", "TeacherID", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { new Guid("44444444-4444-4444-4444-444444444444"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 14, 5, 14, 55, 809, DateTimeKind.Utc).AddTicks(6242), false, new DateTime(2024, 9, 14, 3, 14, 55, 809, DateTimeKind.Utc).AddTicks(6234), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { new Guid("55555555-5555-5555-5555-555555555555"), new Guid("22222222-2222-2222-2222-222222222222"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 15, 5, 14, 55, 809, DateTimeKind.Utc).AddTicks(6245), false, new DateTime(2024, 9, 15, 3, 14, 55, 809, DateTimeKind.Utc).AddTicks(6244), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { new Guid("66666666-6666-6666-6666-666666666666"), new Guid("33333333-3333-3333-3333-333333333333"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 16, 5, 14, 55, 809, DateTimeKind.Utc).AddTicks(6247), false, new DateTime(2024, 9, 16, 3, 14, 55, 809, DateTimeKind.Utc).AddTicks(6247), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { new Guid("44444444-4444-4444-4444-444444444444"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 16, 23, 53, 16, 548, DateTimeKind.Utc).AddTicks(4915), false, new DateTime(2024, 9, 16, 21, 53, 16, 548, DateTimeKind.Utc).AddTicks(4907), new Guid("00000000-0000-0000-0000-000000000001"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("55555555-5555-5555-5555-555555555555"), new Guid("22222222-2222-2222-2222-222222222222"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 17, 23, 53, 16, 548, DateTimeKind.Utc).AddTicks(4924), false, new DateTime(2024, 9, 17, 21, 53, 16, 548, DateTimeKind.Utc).AddTicks(4923), new Guid("00000000-0000-0000-0000-000000000001"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("66666666-6666-6666-6666-666666666666"), new Guid("33333333-3333-3333-3333-333333333333"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 18, 23, 53, 16, 548, DateTimeKind.Utc).AddTicks(4927), false, new DateTime(2024, 9, 18, 21, 53, 16, 548, DateTimeKind.Utc).AddTicks(4926), new Guid("00000000-0000-0000-0000-000000000001"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
@@ -184,6 +248,11 @@ namespace SchoolNotes.API.Migrations
                 name: "IX_CourseSession_CourseID",
                 table: "CourseSession",
                 column: "CourseID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CourseSession_TeacherID",
+                table: "CourseSession",
+                column: "TeacherID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseSessionStudent_CourseSessionID",
@@ -223,6 +292,12 @@ namespace SchoolNotes.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Course");
+
+            migrationBuilder.DropTable(
+                name: "Teacher");
+
+            migrationBuilder.DropTable(
+                name: "Contact");
         }
     }
 }
