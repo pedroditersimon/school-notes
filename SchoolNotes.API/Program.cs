@@ -17,19 +17,23 @@ builder.Services.AddDbContext<DBPostgreSQL>((IServiceProvider services, DbContex
 });
 
 // Repositories
+builder.Services.AddScoped<ContactRepository>();
+builder.Services.AddScoped<StudentRepository>();
+builder.Services.AddScoped<TeacherRepository>();
 builder.Services.AddScoped<CourseRepository>();
 builder.Services.AddScoped<CourseSessionRepository>();
 builder.Services.AddScoped<CourseSessionStudentRepository>();
-builder.Services.AddScoped<StudentRepository>();
 builder.Services.AddScoped<ScoreRepository>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Services
+builder.Services.AddScoped<ContactService>();
+builder.Services.AddScoped<StudentService>();
+builder.Services.AddScoped<TeacherService>();
 builder.Services.AddScoped<CourseService>();
 builder.Services.AddScoped<CourseSessionService>();
 builder.Services.AddScoped<CourseSessionStudentService>();
-builder.Services.AddScoped<StudentService>();
 builder.Services.AddScoped<ScoreService>();
 
 builder.Services.AddControllers();

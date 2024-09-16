@@ -6,6 +6,8 @@ public interface IGenericService<T, Tid>
 
     public IQueryable<T> GetAll(int limit = 50);
 
+    public Task<bool> Exists(Tid id);
+
     public Task<T?> GetByID(Tid id);
 
     public Task<bool> HardDelete(Tid id);

@@ -5,6 +5,5 @@ public class Contact : BaseModel<Guid>
     public string? FirstName { get; set; }   // Juan
     public string? LastName { get; set; }    // Perez
 
-
 }
 

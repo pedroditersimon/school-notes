@@ -11,6 +11,6 @@ public class CourseSession : BaseModel<Guid>
     public Guid CourseID { get; set; }
     public Course? Course { get; set; }
 
-    public Guid TeacherID { get; set; }
+    public Guid? TeacherID { get; set; }
     public Teacher? Teacher { get; set; }
 }

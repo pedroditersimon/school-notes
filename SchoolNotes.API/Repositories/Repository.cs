@@ -3,23 +3,33 @@ using SchoolNotes.API.Models;
 
 namespace SchoolNotes.API.Repositories;
 
-public class Repository<T, Tid>(DbContext dbContext) : IRepository<T, Tid>
+public class Repository<T, Tid> : IRepository<T, Tid>
     where T : BaseModel<Tid>
     where Tid : IEquatable<Tid>
 {
 
-    protected DbSet<T> Entities => dbContext.Set<T>();
+    protected readonly DbContext _dbContext;
+    protected DbSet<T> Entities => _dbContext.Set<T>();
+
+    public Repository(DbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
 
 
-    public async Task<T?> GetByID(Tid id)
-        => await Entities.Where(e => e.ID.Equals(id)).FirstOrDefaultAsync();
-    public IQueryable<T> GetAll(int limit = 50)
+    public virtual async Task<T?> GetByID(Tid id)
+        => await Entities.SingleOrDefaultAsync(e => e.ID.Equals(id));
+    public virtual IQueryable<T> GetAll(int limit = 50)
         => Entities.Take(limit);
 
-    public async Task<T?> Create(T newEntity)
+
+    public virtual async Task<bool> Exists(Tid id)
+        => await GetByID(id) != null;
+
+    public virtual async Task<T?> Create(T newEntity)
         => Entities.Add(newEntity).Entity;
 
-    public async Task<bool> HardDelete(Tid id)
+    public virtual async Task<bool> HardDelete(Tid id)
     {
         T? entity = await GetByID(id);
         if (entity == null)
@@ -30,7 +40,7 @@ public class Repository<T, Tid>(DbContext dbContext) : IRepository<T, Tid>
     }
 
 
-    public async Task<bool> SoftDelete(Tid id)
+    public virtual async Task<bool> SoftDelete(Tid id)
     {
         T? entity = await GetByID(id);
         if (entity == null)
@@ -41,13 +51,15 @@ public class Repository<T, Tid>(DbContext dbContext) : IRepository<T, Tid>
     }
 
 
-    public async Task<T?> Update(T newEntity)
+    public virtual async Task<T?> Update(T newEntity)
     {
         T? existingEntity = await GetByID(newEntity.ID);
         if (existingEntity == null)
             return null;
 
-        dbContext.Entry(existingEntity).CurrentValues.SetValues(newEntity);
+        _dbContext.Entry(existingEntity).CurrentValues.SetValues(newEntity);
         return existingEntity;
     }
+
+
 }

@@ -10,7 +10,7 @@ namespace SchoolNotes.API.Controllers;
 public class ScoreController(ScoreService scoreService)
     : GenericController<Score, Guid>(scoreService)
 {
-    [HttpGet(nameof(GetByStudentID) + "{studentID}")]
+    [HttpGet(nameof(GetByStudentID) + "/{studentID}")]
     public async Task<ActionResult<List<Score>>> GetByStudentID(Guid studentID)
     {
         IQueryable<Score> scores = scoreService.GetByStudentID(studentID);
@@ -18,7 +18,7 @@ public class ScoreController(ScoreService scoreService)
     }
 
 
-    [HttpGet(nameof(GetByCourseSessionID) + "{courseSessionID}")]
+    [HttpGet(nameof(GetByCourseSessionID) + "/{courseSessionID}")]
     public async Task<ActionResult<List<Score>>> GetByCourseSessionID(Guid courseSessionID)
     {
         IQueryable<Score> scores = scoreService.GetByCourseSessionID(courseSessionID);

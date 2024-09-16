@@ -2,12 +2,19 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolNotes.API.Models;
+using SchoolNotes.API.Repositories;
 
 namespace SchoolNotes.API.Services;
 
-public class CourseSessionStudentService(IUnitOfWork unitOfWork)
-    : GenericService<CourseSessionStudent, Guid>(unitOfWork, unitOfWork.CourseSessionStudentRepository)
+public class CourseSessionStudentService : GenericService<CourseSessionStudent, Guid, CourseSessionStudentRepository>
 {
+
+    public CourseSessionStudentService(IUnitOfWork unitOfWork) :
+        base(unitOfWork, unitOfWork.CourseSessionStudentRepository)
+    {
+
+    }
+
 
     public async Task<ActionResult<List<CourseSessionStudent>>> GetByStudentID(Guid id)
     {

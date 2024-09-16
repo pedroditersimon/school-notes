@@ -2,24 +2,40 @@
 using SchoolNotes.API.Repositories;
 namespace SchoolNotes.API.Services;
 
-public class UnitOfWork(DBPostgreSQL dbContext,
-    StudentRepository studentRepository, CourseRepository courseRepository,
-    CourseSessionRepository courseSessionRepository,
-    CourseSessionStudentRepository courseSessionStudentRepository,
-    ScoreRepository scoreRepository) : IUnitOfWork
+public class UnitOfWork : IUnitOfWork
 {
-    public StudentRepository StudentRepository { get; } = studentRepository;
-    public CourseRepository CourseRepository { get; } = courseRepository;
-    public CourseSessionRepository CourseSessionRepository { get; } = courseSessionRepository;
-    public CourseSessionStudentRepository CourseSessionStudentRepository { get; } = courseSessionStudentRepository;
-    public ScoreRepository ScoreRepository { get; } = scoreRepository;
+    private readonly DBPostgreSQL _dbContext;
+    public ContactRepository ContactRepository { get; }
+    public StudentRepository StudentRepository { get; }
+    public TeacherRepository TeacherRepository { get; }
+    public CourseRepository CourseRepository { get; }
+    public CourseSessionRepository CourseSessionRepository { get; }
+    public CourseSessionStudentRepository CourseSessionStudentRepository { get; }
+    public ScoreRepository ScoreRepository { get; }
 
-
+    public UnitOfWork(DBPostgreSQL dbContext,
+                      ContactRepository contactRepository,
+                      StudentRepository studentRepository,
+                      TeacherRepository teacherRepository,
+                      CourseRepository courseRepository,
+                      CourseSessionRepository courseSessionRepository,
+                      CourseSessionStudentRepository courseSessionStudentRepository,
+                      ScoreRepository scoreRepository)
+    {
+        _dbContext = dbContext;
+        ContactRepository = contactRepository;
+        StudentRepository = studentRepository;
+        TeacherRepository = teacherRepository;
+        CourseRepository = courseRepository;
+        CourseSessionRepository = courseSessionRepository;
+        CourseSessionStudentRepository = courseSessionStudentRepository;
+        ScoreRepository = scoreRepository;
+    }
 
     public void Dispose()
-        => dbContext.Dispose();
+        => _dbContext.Dispose();
 
     public async Task<bool> Save()
-        => await dbContext.SaveChangesAsync() > 0;
+        => await _dbContext.SaveChangesAsync() > 0;
 
 }

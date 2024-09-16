@@ -1,11 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolNotes.API.Models;
+using SchoolNotes.API.Repositories;
 
 namespace SchoolNotes.API.Services;
 
-public class StudentService(IUnitOfWork unitOfWork)
-    : GenericService<Student, Guid>(unitOfWork, unitOfWork.StudentRepository)
+public class StudentService : GenericService<Student, Guid, StudentRepository>
 {
+
+    public StudentService(IUnitOfWork unitOfWork) :
+         base(unitOfWork, unitOfWork.StudentRepository)
+    {
+
+    }
 
     public IQueryable<Student> GetByCourseSessionID(Guid courseSessionID)
     {
