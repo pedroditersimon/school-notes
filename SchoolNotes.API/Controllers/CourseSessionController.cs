@@ -24,4 +24,15 @@ public class CourseSessionController(CourseSessionService courseSessionService)
         IQueryable<CourseSession> courseSessions = courseSessionService.GetByCourseID(courseID);
         return await courseSessions.ToListAsync();
     }
+
+
+    [HttpPost(nameof(AssignTeacher))]
+    public async Task<ActionResult<CourseSession?>> AssignTeacher(Guid courseID, Guid teacherID)
+    {
+        CourseSession? courseSession = await courseSessionService.AssignTeacher(courseID, teacherID);
+        if (courseSession == null)
+            return NotFound();
+
+        return courseSession;
+    }
 }

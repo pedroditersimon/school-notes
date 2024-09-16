@@ -21,4 +21,19 @@ public class StudentService : GenericService<Student, Guid, StudentRepository>
             .Select(cst => cst.Student);
     }
 
+    public async Task<Student?> GetByContactDNI(string dni)
+    {
+        Contact? contact = await _unitOfWork.ContactRepository.GetByDNI(dni);
+        if (contact == null)
+            return null;
+
+        return await GetByID(contact.ID);
+    }
+
+    public IQueryable<Student> SearchByContactDNI(string dni)
+    {
+        IQueryable<Contact> contacts = _unitOfWork.ContactRepository.SearchByDNI(dni);
+        IQueryable<Student> students = _unitOfWork.StudentRepository.GetAll().Include(s => s.Contact);
+        return students.Where(s => contacts.Contains(s.Contact));
+    }
 }

@@ -28,4 +28,19 @@ public class CourseSessionService : GenericService<CourseSession, Guid, CourseSe
 
         return courseSessions.Where(cs => cs.CourseID.Equals(courseID));
     }
+
+
+    public async Task<CourseSession?> AssignTeacher(Guid courseID, Guid teacherID)
+    {
+        CourseSession? courseSession = await _unitOfWork.CourseSessionRepository.GetByID(courseID);
+        if (courseSession == null)
+            return null;
+
+        Teacher? teacher = await _unitOfWork.TeacherRepository.GetByID(teacherID);
+        if (teacher == null)
+            return null;
+
+        courseSession.Teacher = teacher;
+        return await _unitOfWork.CourseSessionRepository.Update(courseSession);
+    }
 }

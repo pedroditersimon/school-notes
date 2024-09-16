@@ -13,19 +13,22 @@ public class ContactSeed : IEntityTypeConfiguration<Contact>
             {
                 ID = Guid.Parse("00000000-0000-0000-0000-000000000001"),
                 FirstName = "Maria",
-                LastName = "Gonzalez"
+                LastName = "Gonzalez",
+                DNI = "00000001"
             },
             new Contact
             {
                 ID = Guid.Parse("00000000-0000-0000-0000-000000000002"),
                 FirstName = "Juan",
-                LastName = "Perez"
+                LastName = "Perez",
+                DNI = "00000002"
             },
             new Contact
             {
                 ID = Guid.Parse("00000000-0000-0000-0000-000000000003"),
                 FirstName = "Carlos",
-                LastName = "Rodriguez"
+                LastName = "Rodriguez",
+                DNI = "00000003"
             }
         );
     }

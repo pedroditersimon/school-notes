@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SchoolNotes.API.Database;
@@ -11,9 +12,11 @@ using SchoolNotes.API.Database;
 namespace SchoolNotes.API.Migrations
 {
     [DbContext(typeof(DBPostgreSQL))]
-    partial class DBPostgreSQLModelSnapshot : ModelSnapshot
+    [Migration("20240916182455_AddedContactDNI")]
+    partial class AddedContactDNI
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +62,6 @@ namespace SchoolNotes.API.Migrations
                         {
                             ID = new Guid("00000000-0000-0000-0000-000000000001"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DNI = "00000001",
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Maria",
                             IsDeleted = false,
@@ -70,7 +72,6 @@ namespace SchoolNotes.API.Migrations
                         {
                             ID = new Guid("00000000-0000-0000-0000-000000000002"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DNI = "00000002",
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Juan",
                             IsDeleted = false,
@@ -81,7 +82,6 @@ namespace SchoolNotes.API.Migrations
                         {
                             ID = new Guid("00000000-0000-0000-0000-000000000003"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DNI = "00000003",
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Carlos",
                             IsDeleted = false,
@@ -161,17 +161,11 @@ namespace SchoolNotes.API.Migrations
                     b.Property<DateTime>("DeletedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("timestamp with time zone");
@@ -198,9 +192,9 @@ namespace SchoolNotes.API.Migrations
                             CourseID = new Guid("11111111-1111-1111-1111-111111111111"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new DateTime(2024, 9, 17, 21, 13, 0, 163, DateTimeKind.Utc).AddTicks(260),
+                            EndTime = new DateTime(2024, 9, 17, 20, 24, 53, 904, DateTimeKind.Utc).AddTicks(8628),
                             IsDeleted = false,
-                            StartTime = new DateTime(2024, 9, 17, 19, 13, 0, 163, DateTimeKind.Utc).AddTicks(254),
+                            StartTime = new DateTime(2024, 9, 17, 18, 24, 53, 904, DateTimeKind.Utc).AddTicks(8620),
                             TeacherID = new Guid("00000000-0000-0000-0000-000000000001"),
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -210,9 +204,9 @@ namespace SchoolNotes.API.Migrations
                             CourseID = new Guid("22222222-2222-2222-2222-222222222222"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new DateTime(2024, 9, 18, 21, 13, 0, 163, DateTimeKind.Utc).AddTicks(265),
+                            EndTime = new DateTime(2024, 9, 18, 20, 24, 53, 904, DateTimeKind.Utc).AddTicks(8634),
                             IsDeleted = false,
-                            StartTime = new DateTime(2024, 9, 18, 19, 13, 0, 163, DateTimeKind.Utc).AddTicks(264),
+                            StartTime = new DateTime(2024, 9, 18, 18, 24, 53, 904, DateTimeKind.Utc).AddTicks(8633),
                             TeacherID = new Guid("00000000-0000-0000-0000-000000000001"),
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -222,9 +216,9 @@ namespace SchoolNotes.API.Migrations
                             CourseID = new Guid("33333333-3333-3333-3333-333333333333"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new DateTime(2024, 9, 19, 21, 13, 0, 163, DateTimeKind.Utc).AddTicks(268),
+                            EndTime = new DateTime(2024, 9, 19, 20, 24, 53, 904, DateTimeKind.Utc).AddTicks(8637),
                             IsDeleted = false,
-                            StartTime = new DateTime(2024, 9, 19, 19, 13, 0, 163, DateTimeKind.Utc).AddTicks(268),
+                            StartTime = new DateTime(2024, 9, 19, 18, 24, 53, 904, DateTimeKind.Utc).AddTicks(8636),
                             TeacherID = new Guid("00000000-0000-0000-0000-000000000001"),
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
