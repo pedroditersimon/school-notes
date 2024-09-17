@@ -1,11 +1,11 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using SchoolNotes.API.Models;
-using SchoolNotes.API.Repositories;
+using SchoolNotes.API.Repositories.Interfaces;
 
 namespace SchoolNotes.API.Services;
 
-public class CourseSessionService : GenericService<CourseSession, Guid, CourseSessionRepository>
+public class CourseSessionService : GenericService<CourseSession, Guid, ICourseSessionRepository>
 {
 
     public CourseSessionService(IUnitOfWork unitOfWork)

@@ -1,9 +1,8 @@
 ﻿using SchoolNotes.API.Models;
-using SchoolNotes.API.Repositories;
-
+using SchoolNotes.API.Repositories.Interfaces;
 namespace SchoolNotes.API.Services;
 
-public class ScoreService : GenericService<Score, Guid, ScoreRepository>
+public class ScoreService : GenericService<Score, Guid, IScoreRepository>
 {
 
     public ScoreService(IUnitOfWork unitOfWork)

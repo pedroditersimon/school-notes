@@ -1,10 +1,10 @@
 ﻿using SchoolNotes.API.Models;
-using SchoolNotes.API.Repositories;
+using SchoolNotes.API.Repositories.Interfaces;
 
 namespace SchoolNotes.API.Services;
 
 public class ContactService(IUnitOfWork unitOfWork)
-    : GenericService<Contact, Guid, ContactRepository>(unitOfWork, unitOfWork.ContactRepository)
+    : GenericService<Contact, Guid, IContactRepository>(unitOfWork, unitOfWork.ContactRepository)
 {
     public IQueryable<Contact> SearchByDNI(string dni)
         => _repository.SearchByDNI(dni);

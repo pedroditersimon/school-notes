@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolNotes.API.Models;
-using SchoolNotes.API.Repositories;
-
+using SchoolNotes.API.Repositories.Interfaces;
 namespace SchoolNotes.API.Services;
 
-public class StudentService : GenericService<Student, Guid, StudentRepository>
+public class StudentService : GenericService<Student, Guid, IStudentRepository>
 {
 
     public StudentService(IUnitOfWork unitOfWork) :

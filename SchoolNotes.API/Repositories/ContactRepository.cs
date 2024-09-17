@@ -1,12 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolNotes.API.Database;
 using SchoolNotes.API.Models;
+using SchoolNotes.API.Repositories.Interfaces;
 
 namespace SchoolNotes.API.Repositories;
 
-public class ContactRepository(DBPostgreSQL dbContext)
-    : Repository<Contact, Guid>(dbContext)
+public class ContactRepository
+    : Repository<Contact, Guid>, IContactRepository
 {
+
+    public ContactRepository(DBPostgreSQL dbContext)
+        : base(dbContext)
+    {
+    }
 
     public IQueryable<Contact> SearchByDNI(string dni)
         => Entities.Where(c => c.DNI.Contains(dni));

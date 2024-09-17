@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolNotes.API.Models;
-using SchoolNotes.API.Repositories;
+using SchoolNotes.API.Repositories.Interfaces;
 
 namespace SchoolNotes.API.Services;
 
-public class CourseSessionStudentService : GenericService<CourseSessionStudent, Guid, CourseSessionStudentRepository>
+public class CourseSessionStudentService : GenericService<CourseSessionStudent, Guid, ICourseSessionStudentRepository>
 {
 
     public CourseSessionStudentService(IUnitOfWork unitOfWork) :

@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SchoolNotes.API.Database;
 using SchoolNotes.API.Repositories;
+using SchoolNotes.API.Repositories.Interfaces;
 using SchoolNotes.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,13 +18,13 @@ builder.Services.AddDbContext<DBPostgreSQL>((IServiceProvider services, DbContex
 });
 
 // Repositories
-builder.Services.AddScoped<ContactRepository>();
-builder.Services.AddScoped<StudentRepository>();
-builder.Services.AddScoped<TeacherRepository>();
-builder.Services.AddScoped<CourseRepository>();
-builder.Services.AddScoped<CourseSessionRepository>();
-builder.Services.AddScoped<CourseSessionStudentRepository>();
-builder.Services.AddScoped<ScoreRepository>();
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<ICourseSessionRepository, CourseSessionRepository>();
+builder.Services.AddScoped<ICourseSessionStudentRepository, CourseSessionStudentRepository>();
+builder.Services.AddScoped<IScoreRepository, ScoreRepository>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

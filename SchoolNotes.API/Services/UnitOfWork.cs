@@ -1,26 +1,26 @@
 ﻿using SchoolNotes.API.Database;
-using SchoolNotes.API.Repositories;
+using SchoolNotes.API.Repositories.Interfaces;
 namespace SchoolNotes.API.Services;
 
 public class UnitOfWork : IUnitOfWork
 {
     private readonly DBPostgreSQL _dbContext;
-    public ContactRepository ContactRepository { get; }
-    public StudentRepository StudentRepository { get; }
-    public TeacherRepository TeacherRepository { get; }
-    public CourseRepository CourseRepository { get; }
-    public CourseSessionRepository CourseSessionRepository { get; }
-    public CourseSessionStudentRepository CourseSessionStudentRepository { get; }
-    public ScoreRepository ScoreRepository { get; }
+    public IContactRepository ContactRepository { get; }
+    public IStudentRepository StudentRepository { get; }
+    public ITeacherRepository TeacherRepository { get; }
+    public ICourseRepository CourseRepository { get; }
+    public ICourseSessionRepository CourseSessionRepository { get; }
+    public ICourseSessionStudentRepository CourseSessionStudentRepository { get; }
+    public IScoreRepository ScoreRepository { get; }
 
     public UnitOfWork(DBPostgreSQL dbContext,
-                      ContactRepository contactRepository,
-                      StudentRepository studentRepository,
-                      TeacherRepository teacherRepository,
-                      CourseRepository courseRepository,
-                      CourseSessionRepository courseSessionRepository,
-                      CourseSessionStudentRepository courseSessionStudentRepository,
-                      ScoreRepository scoreRepository)
+                      IContactRepository contactRepository,
+                      IStudentRepository studentRepository,
+                      ITeacherRepository teacherRepository,
+                      ICourseRepository courseRepository,
+                      ICourseSessionRepository courseSessionRepository,
+                      ICourseSessionStudentRepository courseSessionStudentRepository,
+                      IScoreRepository scoreRepository)
     {
         _dbContext = dbContext;
         ContactRepository = contactRepository;

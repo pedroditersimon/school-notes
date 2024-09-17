@@ -1,4 +1,4 @@
-﻿namespace SchoolNotes.API.Repositories;
+﻿namespace SchoolNotes.API.Repositories.Interfaces;
 
 public interface IRepository<T, Tid>
 {

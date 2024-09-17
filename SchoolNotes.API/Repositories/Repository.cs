@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolNotes.API.Models;
+using SchoolNotes.API.Repositories.Interfaces;
 
 namespace SchoolNotes.API.Repositories;
 

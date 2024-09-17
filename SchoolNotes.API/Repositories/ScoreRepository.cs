@@ -1,10 +1,18 @@
 ﻿using SchoolNotes.API.Database;
 using SchoolNotes.API.Models;
+using SchoolNotes.API.Repositories.Interfaces;
 
 namespace SchoolNotes.API.Repositories;
 
-public class ScoreRepository(DBPostgreSQL dbContext) : Repository<Score, Guid>(dbContext)
+public class ScoreRepository : Repository<Score, Guid>, IScoreRepository
 {
+
+    public ScoreRepository(DBPostgreSQL dbContext)
+        : base(dbContext)
+    {
+
+    }
+
     public IQueryable<Score> GetByCourseSessionID(Guid courseSessionID)
         => Entities.Where(sc => sc.CourseSessionID.Equals(courseSessionID));
 

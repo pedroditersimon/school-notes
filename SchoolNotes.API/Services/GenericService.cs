@@ -1,4 +1,4 @@
-﻿using SchoolNotes.API.Repositories;
+﻿using SchoolNotes.API.Repositories.Interfaces;
 
 namespace SchoolNotes.API.Services;
 
