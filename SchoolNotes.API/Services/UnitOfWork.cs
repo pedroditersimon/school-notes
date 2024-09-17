@@ -4,7 +4,7 @@ namespace SchoolNotes.API.Services;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly DBPostgreSQL _dbContext;
+    private readonly SchoolNotesDbContext _dbContext;
     public IContactRepository ContactRepository { get; }
     public IStudentRepository StudentRepository { get; }
     public ITeacherRepository TeacherRepository { get; }
@@ -13,7 +13,7 @@ public class UnitOfWork : IUnitOfWork
     public ICourseSessionStudentRepository CourseSessionStudentRepository { get; }
     public IScoreRepository ScoreRepository { get; }
 
-    public UnitOfWork(DBPostgreSQL dbContext,
+    public UnitOfWork(SchoolNotesDbContext dbContext,
                       IContactRepository contactRepository,
                       IStudentRepository studentRepository,
                       ITeacherRepository teacherRepository,

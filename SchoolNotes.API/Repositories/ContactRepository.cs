@@ -9,7 +9,7 @@ public class ContactRepository
     : Repository<Contact, Guid>, IContactRepository
 {
 
-    public ContactRepository(DBPostgreSQL dbContext)
+    public ContactRepository(SchoolNotesDbContext dbContext)
         : base(dbContext)
     {
     }

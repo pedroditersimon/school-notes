@@ -11,7 +11,7 @@ using SchoolNotes.API.Database;
 
 namespace SchoolNotes.API.Migrations
 {
-    [DbContext(typeof(DBPostgreSQL))]
+    [DbContext(typeof(SchoolNotesDbContext))]
     [Migration("20240916191300_AddedCourseSessionNameAndDescription")]
     partial class AddedCourseSessionNameAndDescription
     {

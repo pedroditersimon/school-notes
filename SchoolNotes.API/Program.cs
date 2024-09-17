@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<DBPostgreSQLSettings>(builder.Configuration.GetSection("DBPostgreSQLSettings"));
 
-builder.Services.AddDbContext<DBPostgreSQL>((IServiceProvider services, DbContextOptionsBuilder options) =>
+builder.Services.AddDbContext<SchoolNotesDbContext>((IServiceProvider services, DbContextOptionsBuilder options) =>
 {
     DBPostgreSQLSettings dbSettings = services.GetRequiredService<IOptions<DBPostgreSQLSettings>>().Value;
     string connectionString = $"Host={dbSettings.Host};Username={dbSettings.Username};Password={dbSettings.Password};Database={dbSettings.Database}";
@@ -46,7 +46,7 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    DBPostgreSQL dbContext = scope.ServiceProvider.GetRequiredService<DBPostgreSQL>();
+    SchoolNotesDbContext dbContext = scope.ServiceProvider.GetRequiredService<SchoolNotesDbContext>();
     dbContext.Database.Migrate();
 }
 

@@ -6,7 +6,7 @@ namespace SchoolNotes.API.Repositories;
 
 public class TeacherRepository : Repository<Teacher, Guid>, ITeacherRepository
 {
-    public TeacherRepository(DBPostgreSQL dbContext)
+    public TeacherRepository(SchoolNotesDbContext dbContext)
         : base(dbContext)
     {
 

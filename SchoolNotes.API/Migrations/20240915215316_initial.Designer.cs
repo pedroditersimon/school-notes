@@ -11,7 +11,7 @@ using SchoolNotes.API.Database;
 
 namespace SchoolNotes.API.Migrations
 {
-    [DbContext(typeof(DBPostgreSQL))]
+    [DbContext(typeof(SchoolNotesDbContext))]
     [Migration("20240915215316_initial")]
     partial class initial
     {

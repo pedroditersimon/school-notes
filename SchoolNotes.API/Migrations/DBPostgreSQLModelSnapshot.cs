@@ -10,7 +10,7 @@ using SchoolNotes.API.Database;
 
 namespace SchoolNotes.API.Migrations
 {
-    [DbContext(typeof(DBPostgreSQL))]
+    [DbContext(typeof(SchoolNotesDbContext))]
     partial class DBPostgreSQLModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

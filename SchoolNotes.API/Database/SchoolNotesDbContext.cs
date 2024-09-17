@@ -4,9 +4,9 @@ using SchoolNotes.API.Models;
 
 namespace SchoolNotes.API.Database;
 
-public class DBPostgreSQL : DbContext
+public class SchoolNotesDbContext : DbContext
 {
-    public DBPostgreSQL(DbContextOptions<DBPostgreSQL> options) : base(options)
+    public SchoolNotesDbContext(DbContextOptions<SchoolNotesDbContext> options) : base(options)
     {
 
     }

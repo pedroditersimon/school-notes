@@ -6,7 +6,7 @@ namespace SchoolNotes.API.Repositories;
 
 public class CourseSessionRepository : Repository<CourseSession, Guid>, ICourseSessionRepository
 {
-    public CourseSessionRepository(DBPostgreSQL dbContext)
+    public CourseSessionRepository(SchoolNotesDbContext dbContext)
         : base(dbContext)
     {
 

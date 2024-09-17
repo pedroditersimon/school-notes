@@ -7,7 +7,7 @@ namespace SchoolNotes.API.Repositories;
 public class ScoreRepository : Repository<Score, Guid>, IScoreRepository
 {
 
-    public ScoreRepository(DBPostgreSQL dbContext)
+    public ScoreRepository(SchoolNotesDbContext dbContext)
         : base(dbContext)
     {
 
