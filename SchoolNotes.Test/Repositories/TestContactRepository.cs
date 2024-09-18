@@ -30,8 +30,8 @@ internal class TestContactRepository
         await dbContext.SaveChangesAsync();
 
         Assert.IsNotNull(contact);
-        Assert.AreEqual(contact.ID, Guid.Parse("00000000-0000-0000-0000-000000000001"));
-        Assert.AreEqual(contact.DNI, "123456789");
+        Assert.AreEqual(TestsHelper.GUID01, contact.ID);
+        Assert.AreEqual("123456789", contact.DNI);
     }
 
     [Test]
@@ -51,8 +51,8 @@ internal class TestContactRepository
         Contact? contact = await repository.GetByID(Guid.Parse("00000000-0000-0000-0000-000000000001"));
 
         Assert.IsNotNull(contact);
-        Assert.AreEqual(contact.ID, Guid.Parse("00000000-0000-0000-0000-000000000001"));
-        Assert.AreEqual(contact.DNI, "123456789");
+        Assert.AreEqual(TestsHelper.GUID01, contact.ID);
+        Assert.AreEqual("123456789", contact.DNI);
     }
 
     [Test]
@@ -84,7 +84,7 @@ internal class TestContactRepository
 
         List<Contact> contacts = await repository.GetAll().ToListAsync();
 
-        Assert.AreEqual(contacts.Count, 5);
+        Assert.AreEqual(5, contacts.Count);
 
         Assert.IsTrue(contacts.All(c => c != null));
         Assert.IsTrue(contacts.All(c => c.ID != Guid.Empty));
@@ -116,9 +116,9 @@ internal class TestContactRepository
         Contact? contact = await repository.GetByID(Guid.Parse("00000000-0000-0000-0000-000000000001"));
 
         Assert.IsNotNull(contact);
-        Assert.AreEqual(contact.ID, Guid.Parse("00000000-0000-0000-0000-000000000001"));
-        Assert.AreEqual(contact.DNI, "987654321");
-        Assert.AreEqual(contact.FirstName, "TestName");
+        Assert.AreEqual(TestsHelper.GUID01, contact.ID);
+        Assert.AreEqual("987654321", contact.DNI);
+        Assert.AreEqual("TestName", contact.FirstName);
     }
 
     [Test]

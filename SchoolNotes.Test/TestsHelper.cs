@@ -7,6 +7,9 @@ namespace SchoolNotes.Test;
 
 internal static class TestsHelper
 {
+    public static readonly Guid GUID01 = Guid.Parse("00000000-0000-0000-0000-000000000001");
+    public static readonly Guid GUID02 = Guid.Parse("00000000-0000-0000-0000-000000000002");
+
     public static SchoolNotesDbContext CreateInMemoryDBContext()
     {
         DbContextOptions<SchoolNotesDbContext> options = new DbContextOptionsBuilder<SchoolNotesDbContext>()
