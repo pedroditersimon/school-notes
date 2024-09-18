@@ -1,5 +1,5 @@
-﻿using SchoolNotes.API.Models;
-using SchoolNotes.API.Models.DTOs;
+﻿using SchoolNotes.API.DTOs.Contact;
+using SchoolNotes.API.Models;
 
 namespace SchoolNotes.API.Mappers;
 

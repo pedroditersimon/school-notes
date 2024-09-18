@@ -1,4 +1,4 @@
-﻿namespace SchoolNotes.API.Models.DTOs;
+﻿namespace SchoolNotes.API.DTOs.Contact;
 
 public class CreateContactRequest
 {
