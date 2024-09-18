@@ -36,9 +36,9 @@ public class GenericController<T, Tid> : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<T?>> Create(T newStudent)
+    public async Task<ActionResult<T?>> Create(T newEntity)
     {
-        T? entity = await _service.Create(newStudent);
+        T? entity = await _service.Create(newEntity);
         if (entity == null)
             return Conflict();
 
@@ -46,9 +46,9 @@ public class GenericController<T, Tid> : ControllerBase
     }
 
     [HttpPut]
-    public async Task<ActionResult<T?>> Update(T newStudent)
+    public async Task<ActionResult<T?>> Update(T newEntity)
     {
-        T? entity = await _service.Update(newStudent);
+        T? entity = await _service.Update(newEntity);
         if (entity == null)
             return Conflict();
 
