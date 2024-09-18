@@ -29,4 +29,6 @@ Y a hechar un vistazo a los repositorios y proyectos de NetMentor en github:
 
 
 ## ToDo
-- Implementar DTOs en las request/responses de los controladores
+- Crear Tests unitarios para los controladores
+- Crear Tests unitarios para los mappers
+- (done) Implementar DTOs en las request/responses de los controladores
