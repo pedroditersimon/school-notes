@@ -7,14 +7,7 @@ namespace SchoolNotes.Test.Repositories;
 
 internal class TestContactRepository
 {
-    SchoolNotesDbContext CreateInMemoryDBContext()
-    {
-        DbContextOptions<SchoolNotesDbContext> options = new DbContextOptionsBuilder<SchoolNotesDbContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString())
-            .Options;
 
-        return new SchoolNotesDbContext(options);
-    }
 
     [SetUp]
     public void SetUp()
@@ -25,8 +18,8 @@ internal class TestContactRepository
     [Test]
     public async Task CreateContact()
     {
-        SchoolNotesDbContext dbContext = CreateInMemoryDBContext();
-        Repository<Contact, Guid> repository = new(dbContext);
+        SchoolNotesDbContext dbContext = TestsHelper.CreateInMemoryDBContext();
+        ContactRepository repository = new(dbContext);
 
         Contact insertedContact = new()
         {
@@ -44,8 +37,8 @@ internal class TestContactRepository
     [Test]
     public async Task GetContactThatExists()
     {
-        SchoolNotesDbContext dbContext = CreateInMemoryDBContext();
-        Repository<Contact, Guid> repository = new(dbContext);
+        SchoolNotesDbContext dbContext = TestsHelper.CreateInMemoryDBContext();
+        ContactRepository repository = new(dbContext);
 
         Contact insertedContact = new()
         {
@@ -65,8 +58,8 @@ internal class TestContactRepository
     [Test]
     public async Task GetContactThatDoesNotExists()
     {
-        SchoolNotesDbContext dbContext = CreateInMemoryDBContext();
-        Repository<Contact, Guid> repository = new(dbContext);
+        SchoolNotesDbContext dbContext = TestsHelper.CreateInMemoryDBContext();
+        ContactRepository repository = new(dbContext);
 
         Contact? contact = await repository.GetByID(Guid.Parse("00000000-0000-0000-0000-000000000001"));
 
@@ -76,8 +69,8 @@ internal class TestContactRepository
     [Test]
     public async Task GetAllWithExactAmount()
     {
-        SchoolNotesDbContext dbContext = CreateInMemoryDBContext();
-        Repository<Contact, Guid> repository = new(dbContext);
+        SchoolNotesDbContext dbContext = TestsHelper.CreateInMemoryDBContext();
+        ContactRepository repository = new(dbContext);
 
         for (int i = 0; i < 5; i++)
         {
@@ -103,8 +96,8 @@ internal class TestContactRepository
     [Test]
     public async Task UpdateContact()
     {
-        SchoolNotesDbContext dbContext = CreateInMemoryDBContext();
-        Repository<Contact, Guid> repository = new(dbContext);
+        SchoolNotesDbContext dbContext = TestsHelper.CreateInMemoryDBContext();
+        ContactRepository repository = new(dbContext);
 
         Contact insertedContact = new()
         {
@@ -131,8 +124,8 @@ internal class TestContactRepository
     [Test]
     public async Task SoftDeleteContact()
     {
-        SchoolNotesDbContext dbContext = CreateInMemoryDBContext();
-        Repository<Contact, Guid> repository = new(dbContext);
+        SchoolNotesDbContext dbContext = TestsHelper.CreateInMemoryDBContext();
+        ContactRepository repository = new(dbContext);
 
         Contact insertedContact = new()
         {
@@ -155,8 +148,8 @@ internal class TestContactRepository
     [Test]
     public async Task HardDeleteContact()
     {
-        SchoolNotesDbContext dbContext = CreateInMemoryDBContext();
-        Repository<Contact, Guid> repository = new(dbContext);
+        SchoolNotesDbContext dbContext = TestsHelper.CreateInMemoryDBContext();
+        ContactRepository repository = new(dbContext);
 
         Contact insertedContact = new()
         {
@@ -178,8 +171,8 @@ internal class TestContactRepository
     [Test]
     public async Task SoftDeleteContactThatDoesNotExists()
     {
-        SchoolNotesDbContext dbContext = CreateInMemoryDBContext();
-        Repository<Contact, Guid> repository = new(dbContext);
+        SchoolNotesDbContext dbContext = TestsHelper.CreateInMemoryDBContext();
+        ContactRepository repository = new(dbContext);
 
         bool deleted = await repository.SoftDelete(Guid.Parse("00000000-0000-0000-0000-000000000001"));
         await dbContext.SaveChangesAsync();
@@ -193,8 +186,8 @@ internal class TestContactRepository
     [Test]
     public async Task HardDeleteContactThatDoesNotExists()
     {
-        SchoolNotesDbContext dbContext = CreateInMemoryDBContext();
-        Repository<Contact, Guid> repository = new(dbContext);
+        SchoolNotesDbContext dbContext = TestsHelper.CreateInMemoryDBContext();
+        ContactRepository repository = new(dbContext);
 
         bool deleted = await repository.HardDelete(Guid.Parse("00000000-0000-0000-0000-000000000001"));
         await dbContext.SaveChangesAsync();
@@ -209,8 +202,8 @@ internal class TestContactRepository
     [Test]
     public async Task ExistsCreatedContact()
     {
-        SchoolNotesDbContext dbContext = CreateInMemoryDBContext();
-        Repository<Contact, Guid> repository = new(dbContext);
+        SchoolNotesDbContext dbContext = TestsHelper.CreateInMemoryDBContext();
+        ContactRepository repository = new(dbContext);
 
         Contact insertedContact = new()
         {
@@ -228,9 +221,8 @@ internal class TestContactRepository
     [Test]
     public async Task NotExistsContact()
     {
-        SchoolNotesDbContext dbContext = CreateInMemoryDBContext();
-        Repository<Contact, Guid> repository = new(dbContext);
-
+        SchoolNotesDbContext dbContext = TestsHelper.CreateInMemoryDBContext();
+        ContactRepository repository = new(dbContext);
 
         bool exists = await repository.Exists(Guid.Parse("00000000-0000-0000-0000-000000000001"));
         Assert.IsFalse(exists);
