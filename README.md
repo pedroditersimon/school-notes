@@ -12,7 +12,7 @@ Resumen de los conocimientos nuevos que adquirí y apliqué en el sistema:
 - Clases y Interfaces generícas para Repositorios, Servicios y Controladores.
 - BaseModel con propiedades heredadas y interacción con clases y interfaces generícas.
 - SoftDelete con QueryFilter.
-- Estructura y organizacion de una solucion y sus projectos en C#.
+- Estructura y organización de una solución y sus proyectos en C#.
 - ConcurrencyCheck con UpdatedDate, para evitar sobrescribir un registro que ya se esta editando simultanemante.
 - Propiedades 'Navigators' de EntityFramework.
 - GUIDs.
