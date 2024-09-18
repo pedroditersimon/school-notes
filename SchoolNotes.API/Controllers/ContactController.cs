@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SchoolNotes.API.DTOs.Contact;
+using SchoolNotes.API.Mappers;
 using SchoolNotes.API.Models;
 using SchoolNotes.API.Services;
 
@@ -7,13 +9,12 @@ namespace SchoolNotes.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ContactController : GenericController<Contact, Guid>
+public class ContactController : ControllerBase
 {
 
     private readonly ContactService _contactService;
 
     public ContactController(ContactService contactService)
-        : base(contactService)
     {
         _contactService = contactService;
     }
@@ -36,5 +37,57 @@ public class ContactController : GenericController<Contact, Guid>
             return NotFound();
 
         return contact;
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ContactResult?>> Get(Guid id)
+    {
+        Contact? contact = await _contactService.GetByID(id);
+        if (contact == null)
+            return NotFound();
+
+        return contact.ToResult();
+    }
+
+    [HttpGet(nameof(GetAll) + "/{limit}")]
+    public async Task<ActionResult<List<ContactResult>>> GetAll(int limit = 50)
+    {
+        List<Contact> contacts = await _contactService.GetAll(limit).ToListAsync();
+        return contacts.Select(c => c.ToResult()).ToList();
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<ContactResult?>> Create(CreateContactRequest request)
+    {
+        Contact? contact = await _contactService.Create(request.ToContact());
+
+        if (contact == null)
+            return Conflict();
+
+        return contact.ToResult();
+    }
+
+    [HttpPut]
+    public async Task<ActionResult<ContactResult?>> Update(UpdateContactRequest request)
+    {
+        Contact? contact = await _contactService.Update(request.ToContact());
+        if (contact == null)
+            return Conflict();
+
+        return contact.ToResult();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Delete(Guid id)
+    {
+        Contact? entity = await _contactService.GetByID(id);
+        if (entity == null)
+            return NotFound();
+
+        bool deleted = await _contactService.SoftDelete(id);
+        if (!deleted)
+            return Conflict();
+
+        return Ok();
     }
 }

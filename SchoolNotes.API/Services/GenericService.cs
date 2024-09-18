@@ -1,8 +1,10 @@
-﻿using SchoolNotes.API.Repositories.Interfaces;
+﻿using SchoolNotes.API.Models;
+using SchoolNotes.API.Repositories.Interfaces;
 
 namespace SchoolNotes.API.Services;
 
 public class GenericService<T, Tid, Trepository> : IGenericService<T, Tid>
+    where T : BaseModel<Tid>
     where Trepository : IRepository<T, Tid>
 {
     protected readonly IUnitOfWork _unitOfWork;
@@ -24,6 +26,8 @@ public class GenericService<T, Tid, Trepository> : IGenericService<T, Tid>
 
     public virtual async Task<T?> Create(T newEntity)
     {
+        newEntity.CreatedDate = DateTime.UtcNow;
+
         T? entity = await _repository.Create(newEntity);
         if (entity == null)
             return default;

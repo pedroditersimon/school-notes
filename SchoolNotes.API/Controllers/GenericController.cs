@@ -5,7 +5,7 @@ using SchoolNotes.API.Services;
 
 namespace SchoolNotes.API.Controllers;
 
-public class GenericController<T, Tid> : ControllerBase
+public class GenericController<T, Tid> : ControllerBase, IGenericController<T, Tid>
     where T : BaseModel<Tid>
     where Tid : IEquatable<Tid>
 {
@@ -56,7 +56,7 @@ public class GenericController<T, Tid> : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<T?>> Delete(Tid id)
+    public async Task<ActionResult> Delete(Tid id)
     {
         T? entity = await _service.GetByID(id);
         if (entity == null)
