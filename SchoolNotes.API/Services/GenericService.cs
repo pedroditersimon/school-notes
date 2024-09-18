@@ -14,6 +14,7 @@ public class GenericService<T, Tid, Trepository> : IGenericService<T, Tid>
         _repository = repository;
     }
 
+
     public virtual IQueryable<T> GetAll(int limit = 50) => _repository.GetAll(limit);
 
     public virtual Task<T?> GetByID(Tid id) => _repository.GetByID(id);
