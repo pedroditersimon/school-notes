@@ -9,6 +9,8 @@ internal static class TestsHelper
 {
     public static readonly Guid GUID01 = Guid.Parse("00000000-0000-0000-0000-000000000001");
     public static readonly Guid GUID02 = Guid.Parse("00000000-0000-0000-0000-000000000002");
+    public static readonly Guid GUID03 = Guid.Parse("00000000-0000-0000-0000-000000000003");
+    public static readonly Guid GUID04 = Guid.Parse("00000000-0000-0000-0000-000000000003");
 
     public static SchoolNotesDbContext CreateInMemoryDBContext()
     {
