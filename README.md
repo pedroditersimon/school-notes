@@ -26,9 +26,3 @@ Tomé riendas gracias a el [Curso de EntityFramework de NetMentor](https://youtu
 Y a hechar un vistazo a los repositorios y proyectos de NetMentor en github:
 - https://github.com/ElectNewt/curso-entity-framework
 - https://github.com/ElectNewt/core-driven-architecture
-
-
-## ToDo
-- Crear Tests unitarios para los controladores
-- Crear Tests unitarios para los mappers
-- (done) Implementar DTOs en las request/responses de los controladores
