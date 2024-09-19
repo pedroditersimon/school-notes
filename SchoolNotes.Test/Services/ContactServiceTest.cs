@@ -11,12 +11,8 @@ internal class ContactServiceTest
     {
     }
 
-    [Test]
-    public async Task SearchByDNI()
+    static async Task InsertTestContacts(IUnitOfWork unitOfWork, ContactService service)
     {
-        IUnitOfWork unitOfWork = TestsHelper.CreateInMemoryUnitOfWork();
-        ContactService service = new(unitOfWork);
-
         await service.Create(new Contact()
         {
             ID = TestsHelper.GUID01,
@@ -33,6 +29,15 @@ internal class ContactServiceTest
             DNI = "123000321"
         });
         await unitOfWork.Save();
+    }
+
+    [Test]
+    public async Task SearchByDNI()
+    {
+        IUnitOfWork unitOfWork = TestsHelper.CreateInMemoryUnitOfWork();
+        ContactService service = new(unitOfWork);
+
+        await InsertTestContacts(unitOfWork, service);
 
         List<Contact> contacts = await service.SearchByDNI("123456789").ToListAsync();
         Contact? resultContact = contacts.FirstOrDefault();
@@ -51,22 +56,7 @@ internal class ContactServiceTest
         IUnitOfWork unitOfWork = TestsHelper.CreateInMemoryUnitOfWork();
         ContactService service = new(unitOfWork);
 
-        await service.Create(new Contact()
-        {
-            ID = TestsHelper.GUID01,
-            DNI = "123456789"
-        });
-        await service.Create(new Contact()
-        {
-            ID = TestsHelper.GUID02,
-            DNI = "987654321"
-        });
-        await service.Create(new Contact()
-        {
-            ID = TestsHelper.GUID03,
-            DNI = "123000321"
-        });
-        await unitOfWork.Save();
+        await InsertTestContacts(unitOfWork, service);
 
         Contact? contact = await service.GetByDNI("123456789");
 
