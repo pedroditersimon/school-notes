@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SchoolNotes.API.Database;
 using SchoolNotes.API.Repositories;
 using SchoolNotes.API.Services;
@@ -34,5 +35,10 @@ internal static class TestsHelper
             new CourseSessionStudentRepository(dbContext),
             new ScoreRepository(dbContext)
         );
+    }
+
+    public static T ReturnValue<T>(this ActionResult<T> result)
+    {
+        return result.Result == null ? result.Value : (T)((ObjectResult)result.Result).Value;
     }
 }
