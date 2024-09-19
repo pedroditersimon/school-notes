@@ -23,10 +23,7 @@ public class ContactController : ControllerBase
     public async Task<ActionResult<List<Contact>>> SearchByDNI(string dni)
     {
         List<Contact> contacts = await _contactService.SearchByDNI(dni).ToListAsync();
-        if (contacts.Count <= 0)
-            return NotFound();
-
-        return contacts;
+        return Ok(contacts);
     }
 
     [HttpGet(nameof(GetByDNI) + "/{dni}")]
@@ -36,7 +33,7 @@ public class ContactController : ControllerBase
         if (contact == null)
             return NotFound();
 
-        return contact;
+        return Ok(contact);
     }
 
     [HttpGet("{id}")]
@@ -46,14 +43,15 @@ public class ContactController : ControllerBase
         if (contact == null)
             return NotFound();
 
-        return contact.ToResult();
+        return Ok(contact.ToResult());
     }
 
     [HttpGet(nameof(GetAll) + "/{limit}")]
     public async Task<ActionResult<List<ContactResult>>> GetAll(int limit = 50)
     {
         List<Contact> contacts = await _contactService.GetAll(limit).ToListAsync();
-        return contacts.Select(c => c.ToResult()).ToList();
+        var contactResults = contacts.Select(c => c.ToResult()).ToList();
+        return Ok(contactResults);
     }
 
     [HttpPost]
@@ -64,24 +62,28 @@ public class ContactController : ControllerBase
         if (contact == null)
             return Conflict();
 
-        return contact.ToResult();
+        return Ok(contact.ToResult());
     }
 
     [HttpPut]
     public async Task<ActionResult<ContactResult?>> Update(UpdateContactRequest request)
     {
+        bool exists = await _contactService.Exists(request.ID);
+        if (!exists)
+            return NotFound();
+
         Contact? contact = await _contactService.Update(request.ToContact());
         if (contact == null)
             return Conflict();
 
-        return contact.ToResult();
+        return Ok(contact.ToResult());
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(Guid id)
     {
-        Contact? entity = await _contactService.GetByID(id);
-        if (entity == null)
+        bool exists = await _contactService.Exists(id);
+        if (!exists)
             return NotFound();
 
         bool deleted = await _contactService.SoftDelete(id);
