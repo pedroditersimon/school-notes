@@ -13,14 +13,16 @@ public class CourseSessionStudentController(CourseSessionStudentService courseSe
     [HttpGet(nameof(GetByStudentID) + "/{studentID}")]
     public async Task<ActionResult<List<CourseSessionStudent>>> GetByStudentID(Guid studentID)
     {
-        return await courseSessionStudentService.GetByStudentID(studentID);
+        List<CourseSessionStudent> courseSessionStudents = await courseSessionStudentService.GetByStudentID(studentID);
+        return Ok(courseSessionStudents);
     }
 
 
     [HttpGet(nameof(GetByCourseSessionID) + "/{courseSessionID}")]
     public async Task<ActionResult<List<CourseSessionStudent>>> GetByCourseSessionID(Guid courseSessionID)
     {
-        return await courseSessionStudentService.GetByCourseSessionID(courseSessionID);
+        List<CourseSessionStudent> courseSessionStudents = await courseSessionStudentService.GetByCourseSessionID(courseSessionID);
+        return Ok(courseSessionStudents);
     }
 
 }

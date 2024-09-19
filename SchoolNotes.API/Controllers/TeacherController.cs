@@ -25,16 +25,13 @@ public class TeacherController : GenericController<Teacher, Guid>
         if (teacher == null)
             return NotFound();
 
-        return teacher;
+        return Ok(teacher);
     }
 
     [HttpGet(nameof(SearchByContactDNI) + "/{dni}")]
     public async Task<ActionResult<List<Teacher>>> SearchByContactDNI(string dni)
     {
         List<Teacher> teachers = await _teacherService.SearchByContactDNI(dni).ToListAsync();
-        if (teachers.Count == 0)
-            return NotFound();
-
-        return teachers;
+        return Ok(teachers);
     }
 }

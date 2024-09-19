@@ -13,15 +13,15 @@ public class ScoreController(ScoreService scoreService)
     [HttpGet(nameof(GetByStudentID) + "/{studentID}")]
     public async Task<ActionResult<List<Score>>> GetByStudentID(Guid studentID)
     {
-        IQueryable<Score> scores = scoreService.GetByStudentID(studentID);
-        return await scores.ToListAsync();
+        List<Score> scores = await scoreService.GetByStudentID(studentID).ToListAsync();
+        return Ok(scores);
     }
 
 
     [HttpGet(nameof(GetByCourseSessionID) + "/{courseSessionID}")]
     public async Task<ActionResult<List<Score>>> GetByCourseSessionID(Guid courseSessionID)
     {
-        IQueryable<Score> scores = scoreService.GetByCourseSessionID(courseSessionID);
-        return await scores.ToListAsync();
+        List<Score> scores = await scoreService.GetByCourseSessionID(courseSessionID).ToListAsync();
+        return Ok(scores);
     }
 }

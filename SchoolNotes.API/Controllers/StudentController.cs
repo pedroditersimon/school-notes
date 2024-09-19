@@ -21,8 +21,8 @@ public class StudentController : GenericController<Student, Guid>
     [HttpGet(nameof(GetByCourseSessionID) + "/{courseSessionID}")]
     public async Task<ActionResult<List<Student>>> GetByCourseSessionID(Guid courseSessionID)
     {
-        IQueryable<Student> students = _studentService.GetByCourseSessionID(courseSessionID);
-        return await students.ToListAsync();
+        List<Student> students = await _studentService.GetByCourseSessionID(courseSessionID).ToListAsync();
+        return Ok(students);
     }
 
 
@@ -33,16 +33,13 @@ public class StudentController : GenericController<Student, Guid>
         if (student == null)
             return NotFound();
 
-        return student;
+        return Ok(student);
     }
 
     [HttpGet(nameof(SearchByContactDNI) + "/{dni}")]
     public async Task<ActionResult<List<Student>>> SearchByContactDNI(string dni)
     {
-        List<Student> contacts = await _studentService.SearchByContactDNI(dni).ToListAsync();
-        if (contacts.Count == 0)
-            return NotFound();
-
-        return contacts;
+        List<Student> students = await _studentService.SearchByContactDNI(dni).ToListAsync();
+        return Ok(students);
     }
 }

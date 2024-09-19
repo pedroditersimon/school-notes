@@ -25,14 +25,14 @@ public class GenericController<T, Tid> : ControllerBase, IGenericController<T, T
         if (entity == null)
             return NotFound();
 
-        return entity;
+        return Ok(entity);
     }
 
     [HttpGet(nameof(GetAll) + "/{limit}")]
     public async Task<ActionResult<List<T>>> GetAll(int limit = 50)
     {
-        IQueryable<T> entities = _service.GetAll(limit);
-        return await entities.ToListAsync();
+        List<T> entities = await _service.GetAll(limit).ToListAsync();
+        return Ok(entities);
     }
 
     [HttpPost]
@@ -42,7 +42,7 @@ public class GenericController<T, Tid> : ControllerBase, IGenericController<T, T
         if (entity == null)
             return Conflict();
 
-        return entity;
+        return Ok(entity);
     }
 
     [HttpPut]
@@ -52,7 +52,7 @@ public class GenericController<T, Tid> : ControllerBase, IGenericController<T, T
         if (entity == null)
             return Conflict();
 
-        return entity;
+        return Ok(entity);
     }
 
     [HttpDelete("{id}")]
